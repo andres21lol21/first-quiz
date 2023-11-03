@@ -1,3 +1,9 @@
+import pets_db
+import sqlite3
+
+conn = sqlite3.connect(pets_db.DB_NAME)
+cursor = conn.cursor()
+
 ################################################################################
 #     ____                          __     _                           ______
 #    / __ \  __  __  ___    _____  / /_   (_)  ____    ____           / ____/
@@ -20,8 +26,11 @@
 
 sql_create_favorite_foods = """
 
-Your SQL here.
-
+CREATE TABLE favorite_foods (
+  food_id integer PRIMARY KEY ,
+  name text,
+  vegetarian integer
+);
 """
 
 # Part 5.B:
@@ -30,7 +39,10 @@ Your SQL here.
 
 sql_alter_tables_with_favorite_food = """
 
-Your SQL here.
+ALTER TABLE animals 
+add favorite_food_id integer;
+ALTER TABLE people
+add favorite_food_id integer;
 
 """
 
@@ -40,6 +52,9 @@ Your SQL here.
 
 sql_select_all_vegetarian_pets = """
 
-Your SQL here.
-
+SELECT a.name , fv.name 
+FROM animals AS a 
+JOIN favorite_foods AS fv on a.favorite_food_id=fv.food_id
+WHERE fv.vegetarian = 1;
 """
+
